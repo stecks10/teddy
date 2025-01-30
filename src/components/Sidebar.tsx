@@ -38,7 +38,8 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           href="#"
           className="flex items-center gap-3 text-gray-700 hover:text-orange-600"
         >
-          <Grid size={20} /> Produtos
+          <Grid size={20} />
+          Clientes selecionados
         </a>
       </nav>
     </div>

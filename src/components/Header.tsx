@@ -24,10 +24,10 @@ export function Header() {
             Clientes
           </a>
           <a href="#" className="text-orange-600 font-medium underline">
-            Produtos
+            Clientes selecionados
           </a>
           <a href="#" className="text-orange-600 font-medium underline">
-            Vendas
+            Sair
           </a>
         </nav>
         <div className="text-gray-700 font-medium mr-8"> Ola, Fulano</div>

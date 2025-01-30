@@ -1,58 +1,50 @@
 import { createContext, useContext, useState, ReactNode } from "react";
 
-// Definição do tipo Cliente
-interface Cliente {
+interface Customer {
   nome: string;
   salario: string;
   empresa: string;
 }
 
-interface ClientesContextType {
-  clientesSelecionados: Cliente[];
-  addCliente: (cliente: Cliente) => void;
-  removeCliente: (index: number) => void;
-  clearClientes: () => void;
+interface ClientContextType {
+  selectedCustomers: Customer[];
+  addCustomer: (customer: Customer) => void;
+  removeCustomer: (index: number) => void;
+  clearCustomers: () => void;
 }
 
-// Criando o contexto
-const ClientesContext = createContext<ClientesContextType | undefined>(
-  undefined
-);
+const ClientContext = createContext<ClientContextType | undefined>(undefined);
 
-// Provedor do contexto
-export function ClientesProvider({ children }: { children: ReactNode }) {
-  const [clientesSelecionados, setClientesSelecionados] = useState<Cliente[]>(
-    []
-  );
+export function ClientProvider({ children }: { children: ReactNode }) {
+  const [selectedCustomers, setSelectedCustomers] = useState<Customer[]>([]);
 
-  const addCliente = (cliente: Cliente) => {
-    setClientesSelecionados((prevClientes) => [...prevClientes, cliente]);
+  const addCustomer = (customer: Customer) => {
+    setSelectedCustomers((prevCustomers) => [...prevCustomers, customer]);
   };
 
-  const removeCliente = (index: number) => {
-    setClientesSelecionados((prevClientes) =>
-      prevClientes.filter((_, i) => i !== index)
+  const removeCustomer = (index: number) => {
+    setSelectedCustomers((prevCustomers) =>
+      prevCustomers.filter((_, i) => i !== index)
     );
   };
 
-  const clearClientes = () => {
-    setClientesSelecionados([]);
+  const clearCustomers = () => {
+    setSelectedCustomers([]);
   };
 
   return (
-    <ClientesContext.Provider
-      value={{ clientesSelecionados, addCliente, removeCliente, clearClientes }}
+    <ClientContext.Provider
+      value={{ selectedCustomers, addCustomer, removeCustomer, clearCustomers }}
     >
       {children}
-    </ClientesContext.Provider>
+    </ClientContext.Provider>
   );
 }
 
-// Hook para acessar o contexto corretamente
-export function useClientes() {
-  const context = useContext(ClientesContext);
+export function useClient() {
+  const context = useContext(ClientContext);
   if (!context) {
-    throw new Error("useClientes deve ser usado dentro de ClientesProvider");
+    throw new Error("useClient deve ser usado dentro de ClientProvider");
   }
   return context;
 }

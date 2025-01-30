@@ -5,30 +5,29 @@ import { DeleteClientModal } from "./DeleteClient";
 import { ClienteModal } from "./ClientModal";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/hooks/use-toast";
-import { useClientes } from "@/context/ClientContext"; // Importando o contexto
+import { useClient } from "@/context/ClientContext";
 
-// Definição do tipo Cliente
 interface Cliente {
   nome: string;
   salario: string;
   empresa: string;
 }
 
-export function Clientes() {
+export function Cliente() {
   const navigate = useNavigate();
   const { toast } = useToast();
-  const { addCliente } = useClientes(); // Usando o contexto para adicionar clientes
+  const { addCustomer } = useClient();
 
   const clientes: Cliente[] = [
     { nome: "Eduardo", salario: "R$ 3.500,00", empresa: "R$ 120.000,00" },
     { nome: "Mariana", salario: "R$ 4.200,00", empresa: "R$ 200.000,00" },
   ];
 
-  // Função para adicionar cliente à lista de selecionados
   const handleAddCliente = (cliente: Cliente) => {
-    addCliente(cliente);
+    addCustomer(cliente);
 
     toast({
+      className: "bg-green-500 text-white",
       title: "Cliente adicionado!",
       description: `${cliente.nome} foi adicionado à lista de selecionados.`,
       action: (

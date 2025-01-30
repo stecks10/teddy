@@ -3,23 +3,20 @@ import "./index.css";
 import { Login } from "./screens/Login";
 import { Home } from "./screens/Home";
 import { Toaster } from "@/components/ui/toaster";
-import { ClientesProvider } from "./context/ClientContext";
-import { ClientesSelecionados } from "./components/ClientSelected";
+import { ClientProvider } from "./context/ClientContext";
+import { ClientSelected } from "./components/ClientSelected";
 
 export function App() {
   return (
-    <ClientesProvider>
+    <ClientProvider>
       <Router>
         <Toaster />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/home" element={<Home />} />
-          <Route
-            path="/clientes-selecionados"
-            element={<ClientesSelecionados />}
-          />
+          <Route path="/clientes-selecionados" element={<ClientSelected />} />
         </Routes>
       </Router>
-    </ClientesProvider>
+    </ClientProvider>
   );
 }
