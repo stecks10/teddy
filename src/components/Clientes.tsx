@@ -1,6 +1,7 @@
-import { Plus, Trash2 } from "lucide-react";
+import { Plus } from "lucide-react";
 import { ClienteModal } from "./ClientModal";
 import { EditClientModal } from "./EditClientModal";
+import { DeleteClientModal } from "./DeleteClient";
 
 export function Clientes() {
   const clientes = [
@@ -10,6 +11,10 @@ export function Clientes() {
     { nome: "Mariana", salario: "R$ 4.200,00", empresa: "R$ 200.000,00" },
     { nome: "Mariana", salario: "R$ 4.200,00", empresa: "R$ 200.000,00" },
   ];
+
+  const handleDelete = (nome: string) => {
+    console.log("Excluir o cliente: ", nome);
+  };
 
   return (
     <div className="p-6">
@@ -46,9 +51,10 @@ export function Clientes() {
                 empresa={cliente.empresa}
               />
 
-              <button className="text-lg text-red-500">
-                <Trash2 size={20} />
-              </button>
+              <DeleteClientModal
+                nome={cliente.nome}
+                onDelete={() => handleDelete(cliente.nome)}
+              />
             </div>
           </div>
         ))}
