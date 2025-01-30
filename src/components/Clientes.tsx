@@ -1,11 +1,7 @@
-import { useState } from "react";
 import { Plus, Edit, Trash2 } from "lucide-react";
-import { Button } from "./ui/button";
 import { ClienteModal } from "./ClientModal";
 
 export function Clientes() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -45,21 +41,7 @@ export function Clientes() {
         ))}
       </div>
 
-      <Button
-        className="bg-[#ec6724] hover:bg-orange-500 w-52 mt-8 min-w-full"
-        onClick={() => setIsModalOpen(true)}
-      >
-        Criar Cliente
-      </Button>
-
-      <ClienteModal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        onSave={() => {
-          console.log("Cliente salvo!");
-          setIsModalOpen(false);
-        }}
-      />
+      <ClienteModal />
 
       <div className="flex justify-center mt-4 space-x-2">
         <button className="px-3 py-1 border rounded">1</button>
