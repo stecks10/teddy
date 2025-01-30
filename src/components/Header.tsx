@@ -1,6 +1,7 @@
 import { Menu } from "lucide-react";
 import { useState } from "react";
 import { Sidebar } from "./Sidebar";
+import { Link } from "react-router-dom";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -20,15 +21,18 @@ export function Header() {
           </div>
         </div>
         <nav className="flex gap-6 text-gray-600">
-          <a href="#" className="text-orange-600 font-medium underline">
+          <Link to="#" className="text-orange-600 font-medium underline">
             Clientes
-          </a>
-          <a href="#" className="text-orange-600 font-medium underline">
+          </Link>
+          <Link
+            to="/clientes-selecionados"
+            className="text-orange-600 font-medium underline"
+          >
             Clientes selecionados
-          </a>
-          <a href="#" className="text-orange-600 font-medium underline">
+          </Link>
+          <Link to="/" className="text-orange-600 font-medium underline">
             Sair
-          </a>
+          </Link>
         </nav>
         <div className="text-gray-700 font-medium mr-8"> Ola, Fulano</div>
       </header>
