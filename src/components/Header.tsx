@@ -1,10 +1,19 @@
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Sidebar } from "./Sidebar";
 import { Link } from "react-router-dom";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [username, setUsername] = useState<string | null>(null);
+
+  // Recuperar nome do localStorage quando o componente for carregado
+  useEffect(() => {
+    const storedName = localStorage.getItem("username");
+    if (storedName) {
+      setUsername(storedName);
+    }
+  }, []);
 
   return (
     <>
@@ -34,7 +43,9 @@ export function Header() {
             Sair
           </Link>
         </nav>
-        <div className="text-gray-700 font-medium mr-8"> Ola, Fulano</div>
+        <div className="text-gray-700 font-medium mr-8">
+          Olá, {username || "Visitante"}
+        </div>
       </header>
 
       <Sidebar isOpen={menuOpen} onClose={() => setMenuOpen(false)} />
