@@ -1,11 +1,15 @@
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import "./index.css";
-import { Button } from "./components/ui/button";
+import { Login } from "./screens/Login";
+import { Home } from "./screens/Home";
 
 export function App() {
   return (
-    <h1 className="text-3xl font-bold underline">
-      Hello
-      <Button className="bg-slate-800 text-white" />
-    </h1>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/home" element={<Home />} />
+      </Routes>
+    </Router>
   );
 }
