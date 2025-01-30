@@ -1,7 +1,16 @@
-import { Plus, Edit, Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import { ClienteModal } from "./ClientModal";
+import { EditClientModal } from "./EditClientModal";
 
 export function Clientes() {
+  const clientes = [
+    { nome: "Eduardo", salario: "R$ 3.500,00", empresa: "R$ 120.000,00" },
+    { nome: "Mariana", salario: "R$ 4.200,00", empresa: "R$ 200.000,00" },
+    { nome: "Mariana", salario: "R$ 4.200,00", empresa: "R$ 200.000,00" },
+    { nome: "Mariana", salario: "R$ 4.200,00", empresa: "R$ 200.000,00" },
+    { nome: "Mariana", salario: "R$ 4.200,00", empresa: "R$ 200.000,00" },
+  ];
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
@@ -21,18 +30,22 @@ export function Clientes() {
       </div>
 
       <div className="grid grid-cols-4 gap-4">
-        {Array.from({ length: 16 }).map((_, index) => (
+        {clientes.map((cliente, index) => (
           <div key={index} className="border rounded-lg p-4 shadow-sm bg-white">
-            <h3 className="font-bold">Eduardo</h3>
-            <p>Salário: R$3.500,00</p>
-            <p>Empresa: R$120.000,00</p>
+            <h3 className="font-bold">{cliente.nome}</h3>
+            <p>Salário: {cliente.salario}</p>
+            <p>Empresa: {cliente.empresa}</p>
             <div className="flex justify-between mt-2">
               <button className="text-lg">
                 <Plus size={20} />
               </button>
-              <button className="text-lg">
-                <Edit size={20} />
-              </button>
+
+              <EditClientModal
+                nome={cliente.nome}
+                salario={cliente.salario}
+                empresa={cliente.empresa}
+              />
+
               <button className="text-lg text-red-500">
                 <Trash2 size={20} />
               </button>
