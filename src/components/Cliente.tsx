@@ -13,26 +13,6 @@ export function Cliente() {
   const { selectedCustomers, addCustomer } = useClient();
   const [clientes, setClientes] = useState<Customer[]>([]);
 
-  useEffect(() => {
-    const storedClientes = localStorage.getItem("clientes");
-    if (storedClientes) {
-      setClientes(JSON.parse(storedClientes));
-    }
-  }, []);
-
-  useEffect(() => {
-    if (clientes.length > 0) {
-      localStorage.setItem("clientes", JSON.stringify(clientes));
-    }
-  }, [clientes]);
-
-  useEffect(() => {
-    const storedClientes = localStorage.getItem("clientes");
-    if (storedClientes) {
-      setClientes(JSON.parse(storedClientes));
-    }
-  }, [selectedCustomers]);
-
   const handleCreateCliente = (cliente: Customer) => {
     setClientes((prevClientes) => {
       const clienteJaExiste = prevClientes.some((c) => c.id === cliente.id);
@@ -77,6 +57,26 @@ export function Cliente() {
       });
     }
   };
+
+  useEffect(() => {
+    const storedClientes = localStorage.getItem("clientes");
+    if (storedClientes) {
+      setClientes(JSON.parse(storedClientes));
+    }
+  }, []);
+
+  useEffect(() => {
+    if (clientes.length > 0) {
+      localStorage.setItem("clientes", JSON.stringify(clientes));
+    }
+  }, [clientes]);
+
+  useEffect(() => {
+    const storedClientes = localStorage.getItem("clientes");
+    if (storedClientes) {
+      setClientes(JSON.parse(storedClientes));
+    }
+  }, [selectedCustomers]);
 
   return (
     <div className="p-6">
