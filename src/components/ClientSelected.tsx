@@ -15,7 +15,10 @@ export function ClientSelected() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Clientes Selecionados</h2>
-
+      <span className="text-black font-semibold">
+        {selectedCustomers.length}
+      </span>{" "}
+      clientes Encontrados:
       <div className="grid grid-cols-4 gap-4">
         {selectedCustomers.map((cliente, index) => (
           <div key={index} className="border rounded-lg p-4 shadow-sm bg-white">
