@@ -7,12 +7,14 @@ interface ClientCardProps {
   cliente: Customer;
   onAddCliente: (cliente: Customer) => void;
   onDeleteCliente: (id: string) => void;
+  onEditCliente: (updatedCliente: Customer) => void;
 }
 
 export function ClientCard({
   cliente,
   onAddCliente,
   onDeleteCliente,
+  onEditCliente,
 }: ClientCardProps) {
   return (
     <div className="border rounded-lg p-4 shadow-sm bg-white">
@@ -23,11 +25,7 @@ export function ClientCard({
         <button className="text-lg" onClick={() => onAddCliente(cliente)}>
           <Plus size={20} />
         </button>
-        <EditClientModal
-          nome={cliente.nome}
-          salario={cliente.salario}
-          empresa={cliente.empresa}
-        />
+        <EditClientModal cliente={cliente} onSave={onEditCliente} />
         <DeleteClientModal
           nome={cliente.nome}
           onDelete={() => onDeleteCliente(cliente.id)}

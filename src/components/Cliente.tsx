@@ -71,12 +71,24 @@ export function Cliente() {
     }
   };
 
+  const handleEditCliente = (updatedCliente: Customer) => {
+    setClientes((prevClientes) =>
+      prevClientes.map((cliente) =>
+        cliente.id === updatedCliente.id ? updatedCliente : cliente
+      )
+    );
+  };
+
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">
           <span className="text-black font-semibold">{clientes.length}</span>{" "}
-          clientes cadastrados
+          clientes cadastrados |{" "}
+          <span className="text-black font-semibold">
+            {selectedCustomers.length}
+          </span>{" "}
+          clientes selecionados:
         </h2>
       </div>
 
@@ -88,6 +100,7 @@ export function Cliente() {
               cliente={cliente}
               onAddCliente={handleAddCliente}
               onDeleteCliente={handleDeleteCliente}
+              onEditCliente={handleEditCliente} // ✅ Agora está correto!
             />
           ))
         ) : (
