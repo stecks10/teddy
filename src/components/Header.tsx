@@ -7,7 +7,6 @@ export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
 
-  // Recuperar nome do localStorage quando o componente for carregado
   useEffect(() => {
     const storedName = localStorage.getItem("username");
     if (storedName) {
@@ -30,7 +29,7 @@ export function Header() {
           </div>
         </div>
         <nav className="flex gap-6 text-gray-600">
-          <Link to="#" className="text-orange-600 font-medium underline">
+          <Link to="/home" className="text-orange-600 font-medium underline">
             Clientes
           </Link>
           <Link

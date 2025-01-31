@@ -13,7 +13,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select"; // ✅ Importação do Select do ShadCN
+} from "@/components/ui/select";
 
 export function Cliente() {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ export function Cliente() {
   const { selectedCustomers, addCustomer } = useClient();
   const [clientes, setClientes] = useState<Customer[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(16);
+  const [itemsPerPage, setItemsPerPage] = useState(1);
 
   useEffect(() => {
     const storedClientes = localStorage.getItem("clientes");
@@ -89,7 +89,6 @@ export function Cliente() {
     );
   };
 
-  // **Lógica de Paginação**
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentClientes = clientes.slice(indexOfFirstItem, indexOfLastItem);
@@ -109,7 +108,7 @@ export function Cliente() {
               <SelectValue placeholder={itemsPerPage} />
             </SelectTrigger>
             <SelectContent>
-              {[4, 8, 12, 16, 20].map((option) => (
+              {[2, 4, 6, 16, 20].map((option) => (
                 <SelectItem key={option} value={option.toString()}>
                   {option}
                 </SelectItem>
