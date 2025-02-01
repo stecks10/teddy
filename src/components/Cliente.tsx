@@ -23,15 +23,20 @@ export function Cliente() {
     handleEditCliente,
   } = useClients();
 
-  const [currentPage, setCurrentPage] = useState(1); // Página atual
-  const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(5);
 
-  // Calculando os índices do primeiro e último item a ser exibido na página
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
 
-  // Selecionando os clientes que devem ser exibidos na página atual
   const currentClientes = clientes.slice(indexOfFirstItem, indexOfLastItem);
+
+  const formatToBRL = (value: number) => {
+    return new Intl.NumberFormat("pt-BR", {
+      style: "currency",
+      currency: "BRL",
+    }).format(value);
+  };
 
   return (
     <div className="p-6">
@@ -65,12 +70,12 @@ export function Cliente() {
           {currentClientes.length > 0 ? (
             currentClientes.map((cliente) => (
               <div
-                key={cliente.id} // Chave única para cada cliente
+                key={cliente.id}
                 className="border rounded-lg p-4 shadow-sm bg-white"
               >
                 <h3 className="font-bold">{cliente.name}</h3>
-                <p>Salário: {cliente.salary}</p>
-                <p>Empresa: {cliente.companyValue}</p>
+                <p>Salário: {formatToBRL(Number(cliente.salary))}</p>
+                <p>Empresa: {formatToBRL(Number(cliente.companyValue))}</p>
                 <div className="flex justify-between mt-2">
                   <button
                     className="text-lg"

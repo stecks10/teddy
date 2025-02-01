@@ -45,7 +45,7 @@ export function EditClient({ client, onEditCliente }: EditClientProps) {
         <Edit size={24} />
       </AlertDialogTrigger>
 
-      <AlertDialogContent className="w-full sm:w-96">
+      <AlertDialogContent className="w-96">
         <AlertDialogHeader>
           <div className="flex justify-between items-center">
             <AlertDialogTitle>Editar Cliente</AlertDialogTitle>
@@ -60,28 +60,28 @@ export function EditClient({ client, onEditCliente }: EditClientProps) {
         <Input
           type="text"
           placeholder="Digite o nome"
-          className="mb-2 w-full"
+          className="mb-2"
           value={nome}
           onChange={(e) => setNome(e.target.value)}
         />
         <Input
           type="text"
           placeholder="Digite o salário"
-          className="mb-2 w-full"
+          className="mb-2"
           value={salario}
           onChange={(e) => setSalario(e.target.value)}
         />
         <Input
           type="text"
           placeholder="Digite o valor da empresa"
-          className="mb-4 w-full"
+          className="mb-4"
           value={empresa}
           onChange={(e) => setEmpresa(e.target.value)}
         />
 
         <AlertDialogFooter>
           <AlertDialogAction
-            className="border-orange-500 bg-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full sm:w-auto"
+            className="border-orange-500 bg-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full bg-transparent"
             onClick={handleEditClient}
           >
             Editar Cliente

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { v4 as uuidv4 } from "uuid";
 import {
   AlertDialog,
@@ -19,30 +19,48 @@ interface CreateClientProps {
   onCreateCliente: (cliente: Customer) => void;
 }
 
-export function CreateClient({ onCreateCliente }: CreateClientProps) {
-  const [nome, setNome] = useState("");
-  const [salario, setSalario] = useState("");
-  const [empresa, setEmpresa] = useState("");
+interface FormData {
+  nome: string;
+  salario: string;
+  empresa: string;
+}
 
-  const handleCreateClient = () => {
+export function CreateClient({ onCreateCliente }: CreateClientProps) {
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormData>();
+
+  const onSubmit = (data: FormData) => {
+    const { nome, salario, empresa } = data;
+
     if (!nome || !salario || !empresa) {
       alert("Por favor, preencha todos os campos.");
+      return;
+    }
+
+    const salarioNum = parseFloat(salario.replace(/[^\d.-]/g, ""));
+    const empresaNum = parseFloat(empresa.replace(/[^\d.-]/g, ""));
+
+    if (isNaN(salarioNum) || isNaN(empresaNum)) {
+      alert(
+        "Por favor, insira valores válidos para o salário e o valor da empresa."
+      );
       return;
     }
 
     const novoCliente: Customer = {
       id: uuidv4(),
       name: nome,
-      salary: salario,
-      companyValue: empresa,
+      salary: salarioNum.toString(),
+      companyValue: empresaNum.toString(),
       isFavorite: false,
     };
 
     onCreateCliente(novoCliente);
-
-    setNome("");
-    setSalario("");
-    setEmpresa("");
+    reset();
   };
 
   return (
@@ -65,36 +83,53 @@ export function CreateClient({ onCreateCliente }: CreateClientProps) {
           </div>
         </AlertDialogHeader>
 
-        <Input
-          type="text"
-          placeholder="Digite o nome"
-          className="mb-2"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Digite o salário"
-          className="mb-2"
-          value={salario}
-          onChange={(e) => setSalario(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Digite o valor da empresa"
-          className="mb-4"
-          value={empresa}
-          onChange={(e) => setEmpresa(e.target.value)}
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-2">
+            <Input
+              type="text"
+              placeholder="Digite o nome"
+              {...register("nome", { required: "Nome é obrigatório" })}
+            />
+            {errors.nome && (
+              <span className="text-red-500">{errors.nome.message}</span>
+            )}
+          </div>
 
-        <AlertDialogFooter>
-          <AlertDialogAction
-            className="border-orange-500 bg-orange-500 hover:bg-orange-500 hover:text-white w-full text-white"
-            onClick={handleCreateClient}
-          >
-            Criar Cliente
-          </AlertDialogAction>
-        </AlertDialogFooter>
+          <div className="mb-2">
+            <Input
+              type="number"
+              placeholder="Digite o salário"
+              {...register("salario", {
+                required: "Salário é obrigatório",
+              })}
+            />
+            {errors.salario && (
+              <span className="text-red-500">{errors.salario.message}</span>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <Input
+              type="number"
+              placeholder="Digite o valor da empresa"
+              {...register("empresa", {
+                required: "Valor da empresa é obrigatório",
+              })}
+            />
+            {errors.empresa && (
+              <span className="text-red-500">{errors.empresa.message}</span>
+            )}
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogAction
+              className="border-orange-500 bg-orange-500 hover:bg-orange-500 hover:text-white w-full text-white"
+              type="submit"
+            >
+              Criar Cliente
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </form>
       </AlertDialogContent>
     </AlertDialog>
   );

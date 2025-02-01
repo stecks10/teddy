@@ -1,12 +1,12 @@
 import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Sidebar } from "./Sidebar";
-import { Link, useLocation } from "react-router-dom"; // Importar useLocation
+import { Link, useLocation } from "react-router-dom";
 
 export function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [username, setUsername] = useState<string | null>(null);
-  const location = useLocation(); // Hook para pegar a localização atual
+  const location = useLocation();
 
   useEffect(() => {
     const storedName = localStorage.getItem("username");
@@ -37,7 +37,7 @@ export function Header() {
               location.pathname === "/home"
                 ? "text-orange-600 underline"
                 : "text-gray-600"
-            }`} // Rota 'home' recebe cor laranja e underline
+            }`}
           >
             Clientes
           </Link>
@@ -47,7 +47,7 @@ export function Header() {
               location.pathname === "/clientes-selecionados"
                 ? "text-orange-600 underline"
                 : "text-gray-600"
-            }`} // Rota 'clientes-selecionados' recebe cor laranja e underline
+            }`}
           >
             Clientes selecionados
           </Link>
@@ -57,7 +57,7 @@ export function Header() {
               location.pathname === "/"
                 ? "text-orange-600 underline"
                 : "text-gray-600"
-            }`} // Rota 'Sair' recebe cor laranja e underline
+            }`}
           >
             Sair
           </Link>

@@ -1,13 +1,12 @@
 import { X, Home, Users, Grid } from "lucide-react";
-import { useLocation } from "react-router-dom"; // Importar useLocation
-
+import { useLocation } from "react-router-dom";
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
-  const location = useLocation(); // Hook para pegar a localização atual
+  const location = useLocation();
 
   return (
     <div
