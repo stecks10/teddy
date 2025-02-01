@@ -35,7 +35,7 @@ export function ClientSelected() {
           </span>
         </div>
 
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
           {favoriteCustomers.map((cliente, index) => (
             <Card key={index} className="shadow-md border border-gray-200">
               <CardHeader>
@@ -68,7 +68,7 @@ export function ClientSelected() {
           <div className="flex justify-center mt-6">
             <Button
               variant="outline"
-              className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full"
+              className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full sm:w-auto"
               onClick={handleClearFavorites}
             >
               Limpar clientes favoritos

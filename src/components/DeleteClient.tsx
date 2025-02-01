@@ -25,7 +25,7 @@ export function DeleteClientModal({ nome, onDelete }: DeleteClientModalProps) {
         </button>
       </AlertDialogTrigger>
 
-      <AlertDialogContent className="w-96">
+      <AlertDialogContent className="w-full sm:w-96">
         <AlertDialogHeader>
           <div className="flex justify-between items-center">
             <AlertDialogTitle>Excluir Cliente</AlertDialogTitle>
@@ -42,7 +42,10 @@ export function DeleteClientModal({ nome, onDelete }: DeleteClientModalProps) {
         </AlertDialogDescription>
 
         <AlertDialogFooter>
-          <AlertDialogAction className="bg-red-500 w-full" onClick={onDelete}>
+          <AlertDialogAction
+            className="bg-red-500 text-white w-full sm:w-auto"
+            onClick={onDelete}
+          >
             Excluir Cliente
           </AlertDialogAction>
         </AlertDialogFooter>

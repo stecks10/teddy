@@ -35,8 +35,8 @@ export function Cliente() {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
+        <h2 className="text-xl font-bold mb-4 sm:mb-0">
           <span className="text-black font-semibold">{clientes.length}</span>{" "}
           clientes encontrados:
         </h2>
@@ -61,7 +61,7 @@ export function Cliente() {
       {loading ? (
         <p>Carregando clientes...</p>
       ) : (
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {currentClientes.length > 0 ? (
             currentClientes.map((cliente) => (
               <div

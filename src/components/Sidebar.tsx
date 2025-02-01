@@ -1,4 +1,5 @@
 import { X, Home, Users, Grid } from "lucide-react";
+import { useLocation } from "react-router-dom"; // Importar useLocation
 
 interface SidebarProps {
   isOpen: boolean;
@@ -6,6 +7,8 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isOpen, onClose }: SidebarProps) {
+  const location = useLocation(); // Hook para pegar a localização atual
+
   return (
     <div
       className={`fixed inset-y-0 left-0 w-64 bg-white shadow-lg transform ${
@@ -22,24 +25,28 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       </div>
 
       <nav className="flex flex-col p-4 space-y-4">
-        <a
-          href="#"
-          className="flex items-center gap-3 text-gray-700 hover:text-orange-600"
-        >
+        <a className="flex items-center gap-3" href="/">
           <Home size={20} /> Home
         </a>
         <a
           href="home"
-          className="flex items-center gap-3 text-orange-600 font-semibold"
+          className={`flex items-center gap-3 ${
+            location.pathname === "/home"
+              ? "text-orange-600 font-semibold"
+              : "text-gray-700 hover:text-orange-600"
+          }`}
         >
           <Users size={20} /> Clientes
         </a>
         <a
           href="clientes-selecionados"
-          className="flex items-center gap-3 text-gray-700 hover:text-orange-600"
+          className={`flex items-center gap-3 ${
+            location.pathname === "/clientes-selecionados"
+              ? "text-orange-600 font-semibold"
+              : "text-gray-700 hover:text-orange-600"
+          }`}
         >
-          <Grid size={20} />
-          Clientes selecionados
+          <Grid size={20} /> Clientes selecionados
         </a>
       </nav>
     </div>
