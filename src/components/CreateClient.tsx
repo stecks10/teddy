@@ -30,8 +30,10 @@ export function CreateClient({ onCreateCliente }: CreateClientProps) {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm<FormData>();
+    formState: { errors, isValid },
+  } = useForm<FormData>({
+    mode: "onChange",
+  });
 
   const onSubmit = (data: FormData) => {
     const { nome, salario, empresa } = data;
@@ -125,6 +127,7 @@ export function CreateClient({ onCreateCliente }: CreateClientProps) {
             <AlertDialogAction
               className="border-orange-500 bg-orange-500 hover:bg-orange-500 hover:text-white w-full text-white"
               type="submit"
+              disabled={!isValid}
             >
               Criar Cliente
             </AlertDialogAction>

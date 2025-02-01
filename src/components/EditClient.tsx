@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Edit, X } from "lucide-react";
 import {
   AlertDialog,
@@ -18,22 +18,37 @@ interface EditClientProps {
   onEditCliente: (cliente: Customer) => void;
 }
 
-export function EditClient({ client, onEditCliente }: EditClientProps) {
-  const [nome, setNome] = useState(client.name);
-  const [salario, setSalario] = useState(client.salary);
-  const [empresa, setEmpresa] = useState(client.companyValue);
+interface FormData {
+  nome: string;
+  salario: string;
+  empresa: string;
+}
 
-  const handleEditClient = () => {
-    if (!nome || !salario || !empresa) {
+export function EditClient({ client, onEditCliente }: EditClientProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid, isDirty },
+  } = useForm<FormData>({
+    mode: "onChange",
+    defaultValues: {
+      nome: client.name,
+      salario: client.salary,
+      empresa: client.companyValue,
+    },
+  });
+
+  const onSubmit = (data: FormData) => {
+    if (!data.nome || !data.salario || !data.empresa) {
       alert("Por favor, preencha todos os campos.");
       return;
     }
 
     const editedClient: Customer = {
       ...client,
-      name: nome,
-      salary: salario,
-      companyValue: empresa,
+      name: data.nome,
+      salary: data.salario,
+      companyValue: data.empresa,
     };
 
     onEditCliente(editedClient);
@@ -57,36 +72,57 @@ export function EditClient({ client, onEditCliente }: EditClientProps) {
           </div>
         </AlertDialogHeader>
 
-        <Input
-          type="text"
-          placeholder="Digite o nome"
-          className="mb-2"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Digite o salário"
-          className="mb-2"
-          value={salario}
-          onChange={(e) => setSalario(e.target.value)}
-        />
-        <Input
-          type="text"
-          placeholder="Digite o valor da empresa"
-          className="mb-4"
-          value={empresa}
-          onChange={(e) => setEmpresa(e.target.value)}
-        />
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="mb-2">
+            <Input
+              type="text"
+              placeholder="Digite o nome"
+              className="mb-2"
+              {...register("nome", { required: "Nome é obrigatório" })}
+            />
+            {errors.nome && (
+              <span className="text-red-500">{errors.nome.message}</span>
+            )}
+          </div>
 
-        <AlertDialogFooter>
-          <AlertDialogAction
-            className="border-orange-500 bg-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full bg-transparent"
-            onClick={handleEditClient}
-          >
-            Editar Cliente
-          </AlertDialogAction>
-        </AlertDialogFooter>
+          <div className="mb-2">
+            <Input
+              type="text"
+              placeholder="Digite o salário"
+              className="mb-2"
+              {...register("salario", {
+                required: "Salário é obrigatório",
+              })}
+            />
+            {errors.salario && (
+              <span className="text-red-500">{errors.salario.message}</span>
+            )}
+          </div>
+
+          <div className="mb-4">
+            <Input
+              type="text"
+              placeholder="Digite o valor da empresa"
+              className="mb-4"
+              {...register("empresa", {
+                required: "Valor da empresa é obrigatório",
+              })}
+            />
+            {errors.empresa && (
+              <span className="text-red-500">{errors.empresa.message}</span>
+            )}
+          </div>
+
+          <AlertDialogFooter>
+            <AlertDialogAction
+              className="border-orange-500 bg-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full bg-transparent"
+              type="submit"
+              disabled={!isDirty || !isValid}
+            >
+              Editar Cliente
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </form>
       </AlertDialogContent>
     </AlertDialog>
   );
