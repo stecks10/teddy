@@ -115,7 +115,7 @@ export function EditClient({ client, onEditCliente }: EditClientProps) {
 
           <AlertDialogFooter>
             <AlertDialogAction
-              className="border-orange-500 bg-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full bg-transparent"
+              className="border-orange-500 bg-orange-500 hover:bg-orange-500 hover:text-white w-full text-white"
               type="submit"
               disabled={!isDirty || !isValid}
             >
