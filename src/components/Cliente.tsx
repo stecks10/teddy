@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/select";
 import { useClients } from "@/hooks/useClients";
 import { DeleteClientModal } from "./DeleteClient";
-import { Plus } from "lucide-react";
+import { Plus, Minus } from "lucide-react";
 import { EditClient } from "./EditClient";
 
 export function Cliente() {
@@ -81,8 +81,13 @@ export function Cliente() {
                     className="text-lg"
                     onClick={() => handleToggleFavorite(cliente)}
                   >
-                    <Plus size={20} />
+                    {cliente.selected ? (
+                      <Minus size={20} />
+                    ) : (
+                      <Plus size={20} />
+                    )}
                   </button>
+
                   <EditClient
                     client={cliente}
                     onEditCliente={handleEditCliente}
