@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { v4 as uuidv4 } from "uuid";
+import { Edit, X } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogTrigger,
@@ -10,56 +10,45 @@ import {
   AlertDialogCancel,
   AlertDialogAction,
 } from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { X } from "lucide-react";
 import { Customer } from "@/context/ClientContext";
 
-interface CreateClientProps {
-  onCreateCliente: (cliente: Customer) => void;
+interface EditClientProps {
+  client: Customer;
+  onEditCliente: (cliente: Customer) => void;
 }
 
-export function CreateClient({ onCreateCliente }: CreateClientProps) {
-  const [nome, setNome] = useState("");
-  const [salario, setSalario] = useState("");
-  const [empresa, setEmpresa] = useState("");
+export function EditClient({ client, onEditCliente }: EditClientProps) {
+  const [nome, setNome] = useState(client.name);
+  const [salario, setSalario] = useState(client.salary);
+  const [empresa, setEmpresa] = useState(client.companyValue);
 
-  const handleCreateClient = () => {
+  const handleEditClient = () => {
     if (!nome || !salario || !empresa) {
       alert("Por favor, preencha todos os campos.");
       return;
     }
 
-    // Ajustar os dados do cliente de acordo com a estrutura da API
-    const novoCliente: Customer = {
-      id: uuidv4(),
-      name: nome, // 'name' ao invés de 'nome'
-      salary: salario, // 'salary' ao invés de 'salario'
-      companyValue: empresa, // 'companyValue' ao invés de 'empresa'
-      isFavorite: false, // Definido como false por padrão
+    const editedClient: Customer = {
+      ...client,
+      name: nome,
+      salary: salario,
+      companyValue: empresa,
     };
 
-    // Passando o novo cliente para a função onCreateCliente
-    onCreateCliente(novoCliente);
-
-    // Limpeza dos campos após a criação
-    setNome("");
-    setSalario("");
-    setEmpresa("");
+    onEditCliente(editedClient);
   };
 
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="border-orange-500 bg-orange-500 text-white hover:bg-orange-500 hover:text-white w-full">
-          Criar Cliente
-        </Button>
+        <Edit size={24} />
       </AlertDialogTrigger>
 
       <AlertDialogContent className="w-96">
         <AlertDialogHeader>
           <div className="flex justify-between items-center">
-            <AlertDialogTitle>Criar Cliente</AlertDialogTitle>
+            <AlertDialogTitle>Editar Cliente</AlertDialogTitle>
             <AlertDialogCancel asChild>
               <button className="transition border-transparent">
                 <X size={20} />
@@ -93,9 +82,9 @@ export function CreateClient({ onCreateCliente }: CreateClientProps) {
         <AlertDialogFooter>
           <AlertDialogAction
             className="border-orange-500 bg-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full bg-transparent"
-            onClick={handleCreateClient}
+            onClick={handleEditClient}
           >
-            Criar Cliente
+            Editar Cliente
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

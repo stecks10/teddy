@@ -6,11 +6,13 @@ import {
   ReactNode,
 } from "react";
 
+// context/ClientContext.ts
 export interface Customer {
-  id: string;
-  nome: string;
-  salario: string;
-  empresa: string;
+  id: string; // Identificador único do cliente
+  name: string; // Nome do cliente
+  salary: string; // Salário do cliente
+  companyValue: string; // Valor da empresa
+  isFavorite: boolean; // Indicador se é favorito
 }
 
 interface ClientContextType {
