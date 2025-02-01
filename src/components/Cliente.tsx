@@ -23,11 +23,14 @@ export function Cliente() {
     handleEditCliente,
   } = useClients();
 
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(1); // Página atual
+  const [itemsPerPage, setItemsPerPage] = useState(5); // Número de itens por página
 
+  // Calculando os índices do primeiro e último item a ser exibido na página
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+
+  // Selecionando os clientes que devem ser exibidos na página atual
   const currentClientes = clientes.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
@@ -62,7 +65,7 @@ export function Cliente() {
           {currentClientes.length > 0 ? (
             currentClientes.map((cliente) => (
               <div
-                key={cliente.id}
+                key={cliente.id} // Chave única para cada cliente
                 className="border rounded-lg p-4 shadow-sm bg-white"
               >
                 <h3 className="font-bold">{cliente.name}</h3>

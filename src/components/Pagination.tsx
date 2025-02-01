@@ -13,10 +13,10 @@ export function Pagination({
   currentPage,
   onPageChange,
 }: PaginationProps) {
-  const totalPages = Math.ceil(totalItems / itemsPerPage);
-  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  const totalPages = Math.max(Math.ceil(totalItems / itemsPerPage), 1);
+  if (totalPages === 0) return null;
 
-  if (totalPages <= 1) return null;
+  const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   return (
     <div className="flex justify-center items-center mt-6 space-x-2">
