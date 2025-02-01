@@ -42,8 +42,11 @@ export function useClients() {
 
   const handleEditCliente = async (updatedCliente: Customer) => {
     try {
-      // Atualiza o cliente na API
-      const updated = await updateClient(updatedCliente.id, updatedCliente);
+      // Atualiza o cliente na API e extrai o cliente atualizado da resposta
+      const { client: updated } = await updateClient(
+        updatedCliente.id,
+        updatedCliente
+      );
 
       // Atualiza o cliente no estado local imediatamente após a edição
       setClientes((prev) =>
