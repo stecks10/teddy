@@ -5,11 +5,11 @@ import {
   updateClient,
   deleteClient,
 } from "../service/api";
-import { Customer, useClient } from "@/context/ClientContext"; // Importando o hook useClient
+import { Customer, useClient } from "@/context/ClientContext";
 import { toast } from "./use-toast";
 
 export function useClients() {
-  const { addCustomer } = useClient(); // Obtendo a função addCustomer do contexto
+  const { addCustomer, removeCustomer } = useClient();
   const [clientes, setClientes] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +32,7 @@ export function useClients() {
   const handleCreateCliente = async (cliente: Customer) => {
     try {
       const newCliente = await createClient(cliente);
-      setClientes((prev) => [...prev, newCliente]); // Adiciona o cliente ao estado imediatamente após a criação
+      setClientes((prev) => [...prev, newCliente]);
       const updatedClientes = await getClients();
       setClientes(updatedClientes);
     } catch (error) {
@@ -42,23 +42,16 @@ export function useClients() {
 
   const handleEditCliente = async (updatedCliente: Customer) => {
     try {
-      // Atualiza o cliente na API e extrai o cliente atualizado da resposta
       const { client: updated } = await updateClient(
         updatedCliente.id,
         updatedCliente
       );
-
-      // Atualiza o cliente no estado local imediatamente após a edição
       setClientes((prev) =>
         prev.map((cliente) =>
           cliente.id === updated.id ? { ...cliente, ...updated } : cliente
         )
       );
-
-      // Atualiza o estado global (Contexto) através da função addCustomer
       addCustomer(updated);
-
-      // Exibe um toast de sucesso
       toast({
         className: "bg-green-500 text-white",
         title: "Cliente Atualizado",
@@ -78,6 +71,7 @@ export function useClients() {
     try {
       await deleteClient(id);
       setClientes((prev) => prev.filter((cliente) => cliente.id !== id));
+      removeCustomer(id);
     } catch (error) {
       console.error("Erro ao deletar cliente:", error);
     }
@@ -85,29 +79,22 @@ export function useClients() {
 
   const handleToggleFavorite = async (client: Customer) => {
     const updatedCliente = { ...client, isFavorite: !client.isFavorite };
-
     try {
-      // Atualizando a API
-      await updateClient(updatedCliente.id, updatedCliente);
-
-      // Atualizando o estado local
+      const response = await updateClient(updatedCliente.id, updatedCliente);
+      const updatedClient = response.client;
+      addCustomer(updatedClient);
       setClientes((prev) =>
-        prev.map((c) => (c.id === client.id ? updatedCliente : c))
+        prev.map((c) => (c.id === updatedClient.id ? updatedClient : c))
       );
-
-      if (updatedCliente.isFavorite) {
-        toast({
-          className: "bg-green-500 text-white",
-          title: "Cliente Favorito",
-          description: `${updatedCliente.name} agora é favorito.`,
-        });
-      } else {
-        toast({
-          className: "bg-yellow-500 text-white",
-          title: "Cliente não é mais favorito",
-          description: `${updatedCliente.name} não é mais favorito.`,
-        });
-      }
+      toast({
+        className: updatedClient.isFavorite
+          ? "bg-green-500 text-white"
+          : "bg-yellow-500 text-white",
+        title: updatedClient.isFavorite
+          ? "Cliente Favorito"
+          : "Cliente não é mais favorito",
+        description: `${updatedClient.name} agora é favorito.`,
+      });
     } catch (error) {
       console.error("Erro ao atualizar favorito:", error);
       toast({

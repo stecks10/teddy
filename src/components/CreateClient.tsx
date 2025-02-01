@@ -30,19 +30,16 @@ export function CreateClient({ onCreateCliente }: CreateClientProps) {
       return;
     }
 
-    // Ajustar os dados do cliente de acordo com a estrutura da API
     const novoCliente: Customer = {
       id: uuidv4(),
-      name: nome, // 'name' ao invés de 'nome'
-      salary: salario, // 'salary' ao invés de 'salario'
-      companyValue: empresa, // 'companyValue' ao invés de 'empresa'
-      isFavorite: false, // Definido como false por padrão
+      name: nome,
+      salary: salario,
+      companyValue: empresa,
+      isFavorite: false,
     };
 
-    // Passando o novo cliente para a função onCreateCliente
     onCreateCliente(novoCliente);
 
-    // Limpeza dos campos após a criação
     setNome("");
     setSalario("");
     setEmpresa("");

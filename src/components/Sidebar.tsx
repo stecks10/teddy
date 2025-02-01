@@ -29,13 +29,13 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <Home size={20} /> Home
         </a>
         <a
-          href="#"
+          href="home"
           className="flex items-center gap-3 text-orange-600 font-semibold"
         >
           <Users size={20} /> Clientes
         </a>
         <a
-          href="#"
+          href="clientes-selecionados"
           className="flex items-center gap-3 text-gray-700 hover:text-orange-600"
         >
           <Grid size={20} />

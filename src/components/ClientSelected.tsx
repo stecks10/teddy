@@ -1,43 +1,72 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { useClient } from "@/context/ClientContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash } from "lucide-react";
 import { Header } from "@/components/Header";
+import { Customer } from "@/context/ClientContext";
+import { getClients } from "@/service/api";
 
 export function ClientSelected() {
-  const { selectedCustomers, removeCustomer, clearCustomers } = useClient();
-  const navigate = useNavigate();
+  const { removeCustomer, addCustomer } = useClient();
+  const [clientes, setClientes] = useState<Customer[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (selectedCustomers.length === 0) {
-      navigate("/home");
+    async function fetchClients() {
+      try {
+        setLoading(true);
+        const clientsFromApi: Customer[] = await getClients();
+        setClientes(clientsFromApi);
+        clientsFromApi.forEach((client) => addCustomer(client));
+      } catch (error) {
+        console.error("Erro ao buscar clientes:", error);
+      } finally {
+        setLoading(false);
+      }
     }
-  }, [selectedCustomers, navigate]);
+    fetchClients();
+  }, [addCustomer]);
+
+  const favoriteCustomers = clientes.filter((cliente) => cliente.isFavorite);
+
+  useEffect(() => {}, [clientes]);
+
+  if (favoriteCustomers.length === 0 && !loading) {
+    return (
+      <>
+        <Header />
+        <div className="p-6">
+          <p className="text-center text-gray-500">
+            Nenhum cliente favorito selecionado.
+          </p>
+        </div>
+      </>
+    );
+  }
 
   return (
     <>
       <Header />
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Clientes Selecionados:</h2>
+          <h2 className="text-2xl font-bold">Clientes Favoritos:</h2>
           <span className="text-gray-700 text-lg font-medium">
-            {selectedCustomers.length} clientes encontrados
+            {favoriteCustomers.length} clientes encontrados
           </span>
         </div>
 
         <div className="grid grid-cols-4 gap-4">
-          {selectedCustomers.map((cliente, index) => (
+          {favoriteCustomers.map((cliente, index) => (
             <Card key={index} className="shadow-md border border-gray-200">
               <CardHeader>
                 <CardTitle className="text-lg font-semibold text-black">
-                  {cliente.nome}
+                  {cliente.name}
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">Salário: {cliente.salario}</p>
-                <p className="text-gray-600">Empresa: {cliente.empresa}</p>
+                <p className="text-gray-600">Salário: {cliente.salary}</p>
+                <p className="text-gray-600">Empresa: {cliente.companyValue}</p>
                 <div className="flex justify-end mt-4">
                   <Button
                     variant="outline"
@@ -53,15 +82,13 @@ export function ClientSelected() {
           ))}
         </div>
 
-        {/* Botão de limpar todos os clientes */}
-        {selectedCustomers.length > 0 && (
+        {favoriteCustomers.length > 0 && (
           <div className="flex justify-center mt-6">
             <Button
               variant="outline"
               className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full"
-              onClick={clearCustomers}
             >
-              Limpar clientes selecionados
+              Limpar clientes favoritos
             </Button>
           </div>
         )}

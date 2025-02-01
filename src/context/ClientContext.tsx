@@ -1,18 +1,11 @@
-import {
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-  ReactNode,
-} from "react";
+import { createContext, useContext, useState, ReactNode } from "react";
 
-// context/ClientContext.ts
 export interface Customer {
-  id: string; // Identificador único do cliente
-  name: string; // Nome do cliente
-  salary: string; // Salário do cliente
-  companyValue: string; // Valor da empresa
-  isFavorite: boolean; // Indicador se é favorito
+  id: string;
+  name: string;
+  salary: string;
+  companyValue: string;
+  isFavorite: boolean;
 }
 
 interface ClientContextType {
@@ -26,35 +19,41 @@ const ClientContext = createContext<ClientContextType | undefined>(undefined);
 
 export function ClientProvider({ children }: { children: ReactNode }) {
   const [selectedCustomers, setSelectedCustomers] = useState<Customer[]>(() => {
-    const savedCustomers = localStorage.getItem("selectedCustomers");
-    return savedCustomers ? JSON.parse(savedCustomers) : [];
+    const storedCustomers = localStorage.getItem("selectedCustomers");
+    return storedCustomers ? JSON.parse(storedCustomers) : [];
   });
-
-  useEffect(() => {
-    localStorage.setItem(
-      "selectedCustomers",
-      JSON.stringify(selectedCustomers)
-    );
-  }, [selectedCustomers]);
 
   const addCustomer = (customer: Customer) => {
     setSelectedCustomers((prevCustomers) => {
       const clienteJaExiste = prevCustomers.some((c) => c.id === customer.id);
       if (!clienteJaExiste) {
-        return [...prevCustomers, customer];
+        const updatedCustomers = [...prevCustomers, customer];
+        localStorage.setItem(
+          "selectedCustomers",
+          JSON.stringify(updatedCustomers)
+        );
+        return updatedCustomers;
       }
       return prevCustomers;
     });
   };
 
   const removeCustomer = (id: string) => {
-    setSelectedCustomers((prevCustomers) =>
-      prevCustomers.filter((customer) => customer.id !== id)
-    );
+    setSelectedCustomers((prevCustomers) => {
+      const updatedCustomers = prevCustomers.filter(
+        (customer) => customer.id !== id
+      );
+      localStorage.setItem(
+        "selectedCustomers",
+        JSON.stringify(updatedCustomers)
+      );
+      return updatedCustomers;
+    });
   };
 
   const clearCustomers = () => {
     setSelectedCustomers([]);
+    localStorage.removeItem("selectedCustomers");
   };
 
   return (
