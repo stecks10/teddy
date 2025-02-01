@@ -56,7 +56,7 @@ export function CreateClient({ onCreateCliente }: CreateClientProps) {
       name: nome,
       salary: salarioNum.toString(),
       companyValue: empresaNum.toString(),
-      isFavorite: false,
+      selected: false,
     };
 
     onCreateCliente(novoCliente);

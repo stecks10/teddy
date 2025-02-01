@@ -78,7 +78,7 @@ export function useClients() {
   };
 
   const handleToggleFavorite = async (client: Customer) => {
-    const updatedCliente = { ...client, isFavorite: !client.isFavorite };
+    const updatedCliente = { ...client, selected: !client.selected };
     try {
       const response = await updateClient(updatedCliente.id, updatedCliente);
       const updatedClient = response.client;
@@ -87,20 +87,20 @@ export function useClients() {
         prev.map((c) => (c.id === updatedClient.id ? updatedClient : c))
       );
       toast({
-        className: updatedClient.isFavorite
+        className: updatedClient.selected
           ? "bg-green-500 text-white"
           : "bg-yellow-500 text-white",
-        title: updatedClient.isFavorite
-          ? "Cliente Favorito"
-          : "Cliente não é mais favorito",
-        description: `${updatedClient.name} agora é favorito.`,
+        title: updatedClient.selected
+          ? "Cliente selecionados"
+          : "Cliente não é mais selecionados",
+        description: `${updatedClient.name} agora é selecionados.`,
       });
     } catch (error) {
-      console.error("Erro ao atualizar favorito:", error);
+      console.error("Erro ao atualizar selecionados:", error);
       toast({
         className: "bg-red-500 text-white",
-        title: "Erro ao atualizar favorito",
-        description: "Não foi possível atualizar o status de favorito.",
+        title: "Erro ao atualizar selecionados",
+        description: "Não foi possível atualizar o status de selecionados.",
       });
     }
   };
@@ -109,27 +109,27 @@ export function useClients() {
     try {
       const updatedClients = clientes.map((client) => ({
         ...client,
-        isFavorite: false,
+        selected: false,
       }));
 
       await Promise.all(
         updatedClients.map((client) =>
-          updateClient(client.id, { ...client, isFavorite: false })
+          updateClient(client.id, { ...client, selected: false })
         )
       );
 
       setClientes(updatedClients);
       toast({
         className: "bg-green-500 text-white",
-        title: "Favoritos Limpos",
-        description: "Todos os clientes favoritos foram removidos.",
+        title: "selecionados Limpos",
+        description: "Todos os clientes selecionados foram removidos.",
       });
     } catch (error) {
-      console.error("Erro ao limpar favoritos:", error);
+      console.error("Erro ao limpar selecionados:", error);
       toast({
         className: "bg-red-500 text-white",
-        title: "Erro ao limpar favoritos",
-        description: "Não foi possível limpar os favoritos.",
+        title: "Erro ao limpar selecionados",
+        description: "Não foi possível limpar os selecionados.",
       });
     }
   };

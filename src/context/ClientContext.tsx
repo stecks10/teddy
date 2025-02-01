@@ -5,7 +5,7 @@ export interface Customer {
   name: string;
   salary: string;
   companyValue: string;
-  isFavorite: boolean;
+  selected: boolean;
 }
 
 interface ClientContextType {

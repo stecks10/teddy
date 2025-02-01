@@ -1,7 +1,7 @@
 import { useClient } from "@/context/ClientContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trash } from "lucide-react";
+import { Minus } from "lucide-react";
 import { Header } from "@/components/Header";
 import { useClients } from "@/hooks/useClients";
 
@@ -9,7 +9,7 @@ export function ClientSelected() {
   const { removeCustomer } = useClient();
   const { clientes, loading, handleClearFavorites, handleToggleFavorite } =
     useClients();
-  const favoriteCustomers = clientes.filter((cliente) => cliente.isFavorite);
+  const favoriteCustomers = clientes.filter((cliente) => cliente.selected);
 
   if (favoriteCustomers.length === 0 && !loading) {
     return (
@@ -17,7 +17,7 @@ export function ClientSelected() {
         <Header />
         <div className="p-6">
           <p className="text-center text-gray-500">
-            Nenhum cliente favorito selecionado.
+            Nenhum cliente selecionado.
           </p>
         </div>
       </>
@@ -29,7 +29,7 @@ export function ClientSelected() {
       <Header />
       <div className="p-6">
         <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold">Clientes Favoritos:</h2>
+          <h2 className="text-2xl font-bold">Clientes Selecionados:</h2>
           <span className="text-gray-700 text-lg font-medium">
             {favoriteCustomers.length} clientes encontrados
           </span>
@@ -56,7 +56,7 @@ export function ClientSelected() {
                       handleToggleFavorite(cliente);
                     }}
                   >
-                    <Trash size={20} />
+                    <Minus size={20} />
                   </Button>
                 </div>
               </CardContent>
@@ -71,7 +71,7 @@ export function ClientSelected() {
               className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full sm:w-auto"
               onClick={handleClearFavorites}
             >
-              Limpar clientes favoritos
+              Limpar clientes selecionados
             </Button>
           </div>
         )}
