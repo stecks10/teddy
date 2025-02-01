@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import {
-  getClients,
   createClient,
-  updateClient,
   deleteClient,
-} from "../service/api";
+  getClients,
+  updateClient,
+} from "@/service/api";
 import { Customer, useClient } from "@/context/ClientContext";
 import { toast } from "./use-toast";
 
@@ -105,6 +105,35 @@ export function useClients() {
     }
   };
 
+  const handleClearFavorites = async () => {
+    try {
+      const updatedClients = clientes.map((client) => ({
+        ...client,
+        isFavorite: false,
+      }));
+
+      await Promise.all(
+        updatedClients.map((client) =>
+          updateClient(client.id, { ...client, isFavorite: false })
+        )
+      );
+
+      setClientes(updatedClients);
+      toast({
+        className: "bg-green-500 text-white",
+        title: "Favoritos Limpos",
+        description: "Todos os clientes favoritos foram removidos.",
+      });
+    } catch (error) {
+      console.error("Erro ao limpar favoritos:", error);
+      toast({
+        className: "bg-red-500 text-white",
+        title: "Erro ao limpar favoritos",
+        description: "Não foi possível limpar os favoritos.",
+      });
+    }
+  };
+
   return {
     clientes,
     loading,
@@ -112,5 +141,6 @@ export function useClients() {
     handleEditCliente,
     handleDeleteCliente,
     handleToggleFavorite,
+    handleClearFavorites,
   };
 }

@@ -1,36 +1,15 @@
-import { useState, useEffect } from "react";
 import { useClient } from "@/context/ClientContext";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trash } from "lucide-react";
 import { Header } from "@/components/Header";
-import { Customer } from "@/context/ClientContext";
-import { getClients } from "@/service/api";
+import { useClients } from "@/hooks/useClients";
 
 export function ClientSelected() {
-  const { removeCustomer, addCustomer } = useClient();
-  const [clientes, setClientes] = useState<Customer[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchClients() {
-      try {
-        setLoading(true);
-        const clientsFromApi: Customer[] = await getClients();
-        setClientes(clientsFromApi);
-        clientsFromApi.forEach((client) => addCustomer(client));
-      } catch (error) {
-        console.error("Erro ao buscar clientes:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchClients();
-  }, [addCustomer]);
-
+  const { removeCustomer } = useClient();
+  const { clientes, loading, handleClearFavorites, handleToggleFavorite } =
+    useClients();
   const favoriteCustomers = clientes.filter((cliente) => cliente.isFavorite);
-
-  useEffect(() => {}, [clientes]);
 
   if (favoriteCustomers.length === 0 && !loading) {
     return (
@@ -72,7 +51,10 @@ export function ClientSelected() {
                     variant="outline"
                     size="icon"
                     className="text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
-                    onClick={() => removeCustomer(cliente.id)}
+                    onClick={() => {
+                      removeCustomer(cliente.id);
+                      handleToggleFavorite(cliente);
+                    }}
                   >
                     <Trash size={20} />
                   </Button>
@@ -87,6 +69,7 @@ export function ClientSelected() {
             <Button
               variant="outline"
               className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full"
+              onClick={handleClearFavorites}
             >
               Limpar clientes favoritos
             </Button>
