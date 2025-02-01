@@ -36,7 +36,7 @@ export function ClientSelected() {
   return (
     <>
       <Header />
-      <div className="p-6">
+      <div className="p-10">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-2xl font-bold">Clientes Selecionados:</h2>
           <span className="text-gray-700 text-lg font-medium">

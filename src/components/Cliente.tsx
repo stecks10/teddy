@@ -39,7 +39,7 @@ export function Cliente() {
   };
 
   return (
-    <div className="p-6">
+    <div className="p-10">
       <div className="flex flex-col sm:flex-row justify-between items-center mb-4">
         <h2 className="text-xl font-bold mb-4 sm:mb-0">
           <span className="text-black font-semibold">{clientes.length}</span>{" "}
