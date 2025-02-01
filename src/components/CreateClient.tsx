@@ -66,7 +66,7 @@ export function CreateClient({ onCreateCliente }: CreateClientProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Button className="border-2 border-orange-600 bg-white text-orange-600 hover:bg-orange-600 hover:text-white w-full">
+        <Button className="bg-orange-500 text-white hover:bg-orange-300 hover:text-white w-full">
           Criar Cliente
         </Button>
       </AlertDialogTrigger>

@@ -5,6 +5,15 @@ import { Minus } from "lucide-react";
 import { Header } from "@/components/Header";
 import { useClients } from "@/hooks/useClients";
 
+// Função para formatar números em BRL
+const formatToBRL = (value: string | number) => {
+  const numericValue = typeof value === "string" ? parseFloat(value) : value; // Converte a string para número, se necessário
+  return new Intl.NumberFormat("pt-BR", {
+    style: "currency",
+    currency: "BRL",
+  }).format(numericValue);
+};
+
 export function ClientSelected() {
   const { removeCustomer } = useClient();
   const { clientes, loading, handleClearFavorites, handleToggleFavorite } =
@@ -44,13 +53,17 @@ export function ClientSelected() {
                 </CardTitle>
               </CardHeader>
               <CardContent>
-                <p className="text-gray-600">Salário: {cliente.salary}</p>
-                <p className="text-gray-600">Empresa: {cliente.companyValue}</p>
+                <p className="text-gray-600">
+                  Salário: {formatToBRL(cliente.salary)}
+                </p>
+                <p className="text-gray-600">
+                  Empresa: {formatToBRL(cliente.companyValue)}
+                </p>
                 <div className="flex justify-end mt-4">
                   <Button
-                    variant="outline"
+                    variant="secondary"
                     size="icon"
-                    className="text-red-500 border-red-500 hover:bg-red-500 hover:text-white"
+                    className="text-orange-500 border-orange-500 hover:bg-orange-500 hover:text-white"
                     onClick={() => {
                       removeCustomer(cliente.id);
                       handleToggleFavorite(cliente);
@@ -67,8 +80,7 @@ export function ClientSelected() {
         {favoriteCustomers.length > 0 && (
           <div className="flex justify-center mt-6">
             <Button
-              variant="outline"
-              className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white w-full sm:w-auto"
+              className="border-orange-500 text-white hover:bg-orange-400 hover:text-white hover:border-orange-600 transition-colors duration-200 w-full bg-orange-600"
               onClick={handleClearFavorites}
             >
               Limpar clientes selecionados
