@@ -57,7 +57,9 @@ export function EditClient({ client, onEditCliente }: EditClientProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <Edit size={20} />
+        <button data-testid="editar-cliente">
+          <Edit size={20} />
+        </button>
       </AlertDialogTrigger>
 
       <AlertDialogContent className="w-96">
