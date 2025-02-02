@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useClients } from "@/hooks/useClients";
-import { DeleteClientModal } from "./DeleteClient";
+import { DeleteClient } from "./DeleteClient";
 import { Plus, Minus } from "lucide-react";
 import { EditClient } from "./EditClient";
 
@@ -94,7 +94,7 @@ export function Cliente() {
                     onEditCliente={handleEditCliente}
                   />
 
-                  <DeleteClientModal
+                  <DeleteClient
                     nome={cliente.name}
                     onDelete={() => handleDeleteCliente(cliente.id)}
                   />

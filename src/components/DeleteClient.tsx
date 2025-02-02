@@ -11,16 +11,16 @@ import {
 } from "@/components/ui/alert-dialog";
 import { Trash2, X } from "lucide-react";
 
-interface DeleteClientModalProps {
+interface DeleteClientProps {
   nome: string;
   onDelete: () => void;
 }
 
-export function DeleteClientModal({ nome, onDelete }: DeleteClientModalProps) {
+export function DeleteClient({ nome, onDelete }: DeleteClientProps) {
   return (
     <AlertDialog>
       <AlertDialogTrigger asChild>
-        <button className="text-lg text-red-500">
+        <button data-testid="delete-cliente" className="text-lg text-red-500">
           <Trash2 size={20} />
         </button>
       </AlertDialogTrigger>
