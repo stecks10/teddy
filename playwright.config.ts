@@ -8,11 +8,11 @@ export default defineConfig({
   workers: process.env.CI ? 1 : undefined,
   // reporter: 'html',
   use: {
-    baseURL: "http://localhost:50789",
+    baseURL: "http://localhost:5173",
   },
   webServer: {
     command: "npm dev:test",
-    url: "http://localhost:50789",
+    url: "http://localhost:5173",
     reuseExistingServer: !process.env.CI,
   },
   // projects: [

@@ -50,7 +50,7 @@ export function Cliente() {
           <label className="text-sm font-medium">Clientes por página:</label>
           <Select onValueChange={(value) => setItemsPerPage(Number(value))}>
             <SelectTrigger className="w-[70px] border rounded-md p-2">
-              <SelectValue placeholder={itemsPerPage} />
+              <SelectValue placeholder={itemsPerPage.toString()} />
             </SelectTrigger>
             <SelectContent>
               {[2, 4, 6, 16, 20].map((option) => (
@@ -68,10 +68,11 @@ export function Cliente() {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {currentClientes.length > 0 ? (
-            currentClientes.map((cliente) => (
+            currentClientes.map((cliente, index) => (
               <div
-                key={cliente.id}
-                className="border rounded-lg p-4 shadow-sm bg-white"
+                key={cliente.id ?? `temp-${index}`}
+                data-testid={`cliente-${cliente.id ?? `temp-${index}`}`}
+                className="border rounded-lg p-4 shadow-sm bg-white cliente-card"
               >
                 <h3 className="font-bold">{cliente.name}</h3>
                 <p>Salário: {formatToBRL(Number(cliente.salary))}</p>
@@ -92,6 +93,7 @@ export function Cliente() {
                     client={cliente}
                     onEditCliente={handleEditCliente}
                   />
+
                   <DeleteClientModal
                     nome={cliente.name}
                     onDelete={() => handleDeleteCliente(cliente.id)}
