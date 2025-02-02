@@ -5,9 +5,8 @@ import { Minus } from "lucide-react";
 import { Header } from "@/components/Header";
 import { useClients } from "@/hooks/useClients";
 
-// Função para formatar números em BRL
 const formatToBRL = (value: string | number) => {
-  const numericValue = typeof value === "string" ? parseFloat(value) : value; // Converte a string para número, se necessário
+  const numericValue = typeof value === "string" ? parseFloat(value) : value;
   return new Intl.NumberFormat("pt-BR", {
     style: "currency",
     currency: "BRL",
@@ -61,6 +60,7 @@ export function ClientSelected() {
                 </p>
                 <div className="flex justify-end mt-4">
                   <Button
+                    data-testid="remove-cliente"
                     variant="secondary"
                     size="icon"
                     className="text-orange-500 border-orange-500 hover:bg-orange-500 hover:text-white"
