@@ -38,7 +38,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           <Users size={20} /> Clientes
         </a>
         <a
-          href="clientes-selecionados"
+          href="/clientes-selecionados"
           className={`flex items-center gap-3 ${
             location.pathname === "/clientes-selecionados"
               ? "text-orange-600 font-semibold"
