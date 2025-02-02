@@ -2,7 +2,7 @@
 import { Customer } from "@/context/ClientContext";
 import axios from "axios";
 
-const API_URL = "http://localhost:3333/clients";
+const API_URL = process.env.BASE_URL + "/clients";
 
 export const getClients = async () => {
   try {
