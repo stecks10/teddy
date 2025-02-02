@@ -1,5 +1,6 @@
 import { X, Home, Users, Grid } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+
 interface SidebarProps {
   isOpen: boolean;
   onClose: () => void;
@@ -24,11 +25,19 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
       </div>
 
       <nav className="flex flex-col p-4 space-y-4">
-        <a className="flex items-center gap-3" href="/">
+        <Link
+          to="/"
+          className={`flex items-center gap-3 ${
+            location.pathname === "/"
+              ? "text-orange-600 font-semibold"
+              : "text-gray-700 hover:text-orange-600"
+          }`}
+        >
           <Home size={20} /> Home
-        </a>
-        <a
-          href="home"
+        </Link>
+
+        <Link
+          to="/home"
           className={`flex items-center gap-3 ${
             location.pathname === "/home"
               ? "text-orange-600 font-semibold"
@@ -36,9 +45,10 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           }`}
         >
           <Users size={20} /> Clientes
-        </a>
-        <a
-          href="/clientes-selecionados"
+        </Link>
+
+        <Link
+          to="/clientes-selecionados"
           className={`flex items-center gap-3 ${
             location.pathname === "/clientes-selecionados"
               ? "text-orange-600 font-semibold"
@@ -46,7 +56,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           }`}
         >
           <Grid size={20} /> Clientes selecionados
-        </a>
+        </Link>
       </nav>
     </div>
   );
