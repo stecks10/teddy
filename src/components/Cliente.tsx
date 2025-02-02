@@ -56,9 +56,12 @@ export function Cliente() {
 
         <div className="flex items-center space-x-2">
           <label className="text-sm font-medium">Clientes por página:</label>
-          <Select onValueChange={(value) => setItemsPerPage(Number(value))}>
+          <Select
+            value={itemsPerPage.toString()}
+            onValueChange={(value) => setItemsPerPage(Number(value))}
+          >
             <SelectTrigger className="w-[70px] border rounded-md p-2">
-              <SelectValue placeholder={itemsPerPage.toString()} />
+              <SelectValue>{itemsPerPage}</SelectValue>{" "}
             </SelectTrigger>
             <SelectContent>
               {[2, 4, 6, 16, 20].map((option) => (
