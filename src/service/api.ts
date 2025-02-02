@@ -1,13 +1,12 @@
-// services/clientService.ts
 import { Customer } from "@/context/ClientContext";
 import axios from "axios";
 
-const API_URL = process.env.BASE_URL + "/clients";
+const API_URL = `${process.env.BASE_URL}/clients`;
 
 export const getClients = async () => {
   try {
     const response = await axios.get(API_URL);
-    return response.data; // O formato dos dados agora é compatível com o novo modelo
+    return response.data;
   } catch (error) {
     console.error("Erro ao buscar clientes:", error);
     throw error;
