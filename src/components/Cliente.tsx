@@ -86,8 +86,19 @@ export function Cliente() {
                 className="border rounded-lg p-4 shadow-sm bg-white cliente-card"
               >
                 <h3 className="font-bold">{cliente.name}</h3>
-                <p>Salário: {formatToBRL(Number(cliente.salary))}</p>
-                <p>Empresa: {formatToBRL(Number(cliente.companyValue))}</p>
+                <p>
+                  Salário:{" "}
+                  {cliente.salary
+                    ? formatToBRL(Number(cliente.salary))
+                    : "Carregando..."}
+                </p>
+                <p>
+                  Empresa:{" "}
+                  {cliente.companyValue
+                    ? formatToBRL(Number(cliente.companyValue))
+                    : "Carregando..."}
+                </p>
+
                 <div className="flex justify-between mt-2">
                   <button
                     className="text-lg"
